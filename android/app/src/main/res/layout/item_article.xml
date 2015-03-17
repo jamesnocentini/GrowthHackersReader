@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/header">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#383C40" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/imageThumbnail"
+            android:minHeight="30dp"
+            android:layout_width="56dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scaleType="fitCenter"/>
+
+        <LinearLayout
+            android:layout_toRightOf="@+id/imageThumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/labelTopic"
+                android:textAllCaps="true"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Press"
+                android:textColor="@color/background_material_light"
+                android:fontFamily="sans-serif-thin"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="16dp"
+                android:layout_weight="1"
+                android:id="@+id/labelTitle"
+                android:text="A random title"
+                android:textColor="@color/background_material_light"/>
+
+        </LinearLayout>
+
+
+        <ImageButton
+            android:id="@+id/buttonLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_heart_outline_grey"
+            android:layout_centerVertical="true"
+            android:background="@android:color/transparent"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#ff23272c" />
+
+    <TextView
+        android:id="@+id/summaryView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Some random text"
+        android:textColor="@color/background_material_light"
+        android:background="@color/backgroundDark"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingRight="25dp"
+        android:paddingLeft="25dp"/>
+
+</LinearLayout>
+

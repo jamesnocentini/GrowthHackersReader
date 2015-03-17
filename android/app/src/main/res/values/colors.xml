@@ -2,4 +2,6 @@
 <resources>
     <color name="colorPrimary">#19AD91</color>
     <color name="colorPrimaryDark">#ff158c74</color>
+    <color name="header">#2E3236</color>
+    <color name="backgroundDark">#ff32373a</color>
 </resources>
