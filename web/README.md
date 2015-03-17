@@ -44,3 +44,43 @@ and add data persistence along with offline support!
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
  ```
  
+ 
+ 4. We start to work the UI with the header. Thanks to Materialize, we already have many elements. 
+ 
+ ```
+ <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Main title</a>
+      </div>
+ </nav>
+ ```
+ 
+ 
+ 5. To be as close as possible to the Growth Hackers UI guidelines, we need to change the color of the header. The list of colors classes of Materialize is available [here](http://materializecss.com/color.html).
+ We need to add it to the ```<div class="nav-wrapper">```.
+ 
+ 
+6. Now we finished the header, let's create the wrapper of the page content:
+
+```
+<div class="row">
+      <div class="col s12 m6"></div>
+</div>
+```
+      
+
+7. Now we add the items that will represent the submitted links. To follow the Material Design guidelines, the [card UI element](http://materializecss.com/cards.html) is the best fit for this need. We have to add them inside ```<div class="col s12 m6"></div>```:
+
+```
+<div class="card">
+  <div class="card-content grey-text text-darken-4">
+    <span class="card-title blue-text text-darken-2">Card Title</span>
+    <p>I am a very simple card. I am good at containing small bits of information.</p>
+  </div>
+  <div class="card-action">
+    <a href="#">This is a link</a>
+  </div>
+</div>
+```
+Don't forget to add color classes to have the right UI fit.
+
