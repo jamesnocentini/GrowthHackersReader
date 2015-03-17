@@ -1,0 +1,11 @@
+{
+  "log": ["CRUD", "REST+", "Access"],
+  "databases": {
+    "growthhackers": {
+      "server": "walrus:",
+      "users": {
+        "GUEST": {"disabled": false, "admin_channels": ["*"]}
+      }
+    }
+  }
+}
