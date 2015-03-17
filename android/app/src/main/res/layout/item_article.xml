@@ -45,14 +45,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginRight="70dp"
                 android:layout_weight="1"
                 android:id="@+id/labelTitle"
-                android:text="A random title"
+                android:text="Five Creative Ways Brands Can Use Meerkat for Marketing"
                 android:textColor="@color/background_material_light"/>
 
         </LinearLayout>
 
+        <TextSwitcher
+            android:id="@+id/tsLikesCounter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="30dp"
+            android:layout_alignRight="@+id/buttonLike"
+            android:layout_centerVertical="true"
+            android:inAnimation="@anim/slide_in_likes_counter"
+            android:outAnimation="@anim/slide_out_likes_counter">
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:text="123"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textColor="@color/background_material_light" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:textAlignment="gravity"
+                android:textColor="@color/background_material_light"/>
+        </TextSwitcher>
 
         <ImageButton
             android:id="@+id/buttonLike"

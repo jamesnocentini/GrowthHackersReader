@@ -13,11 +13,15 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
+/**
+ * Expandable RecyclerView cells - inspired from https://gist.github.com/ZkHaider/9bf0e1d7b8a2736fd676
+ */
 public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private int originalHeight = 0;
@@ -34,6 +38,9 @@ public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.O
 
     @InjectView(R.id.summaryView)
     TextView summaryView;
+
+    @InjectView(R.id.tsLikesCounter)
+    TextSwitcher tsLikesCounter;
 
     @InjectView(R.id.buttonLike)
     ImageButton buttonLike;

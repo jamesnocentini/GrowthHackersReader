@@ -24,7 +24,7 @@ public class Article {
     private String thumbnail;           // footer_profile_icons_image_list
     private String author;              // link_3/_text
     private String summary;             // text_list_1 & text_2
-    private Boolean favourite;
+    private int likes;
 
     public Article(Database database) {
         this.database = database;
@@ -59,6 +59,7 @@ public class Article {
         properties.put("thumbnail", thumbnail);
         properties.put("author", author);
         properties.put("summary", summary);
+        properties.put("likes", 0);
         try {
             doc.putProperties(properties);
         } catch (CouchbaseLiteException e) {
@@ -73,8 +74,30 @@ public class Article {
         article.setThumbnail((String) document.getProperty("thumbnail"));
         article.setAuthor((String) document.getProperty("author"));
         article.setSummary((String) document.getProperty("summary"));
+        if (document.getProperty("likes") != null) {
+            article.setLikes((int) document.getProperty("likes"));
+        } else {
+            article.setLikes(0);
+        }
         article.setSourceDocument(document);
         return article;
+    }
+
+    public void save() {
+        Map<String, Object> properties = new HashMap<String, Object>();
+        Document document;
+        if (sourceDocument == null) {
+            document = database.createDocument();
+        } else {
+            document = sourceDocument;
+            properties.putAll(sourceDocument.getProperties());
+        }
+        properties.put("likes", likes);
+        try {
+            document.putProperties(properties);
+        } catch (CouchbaseLiteException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getTitle() {
@@ -125,11 +148,11 @@ public class Article {
         this.sourceDocument = sourceDocument;
     }
 
-    public Boolean getFavourite() {
-        return favourite;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setFavourite(Boolean favourite) {
-        this.favourite = favourite;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
