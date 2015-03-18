@@ -23,6 +23,7 @@ request({url: url}, function(error, response, body) {
             } else {
                 obj.summary = article["text_list_3"]
             }
+            obj.isAdmin = true;
 
             console.log(obj);
 

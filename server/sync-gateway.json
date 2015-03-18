@@ -9,8 +9,15 @@
     "growthhackers": {
       "server": "walrus:",
       "users": {
-        "GUEST": {"disabled": false, "admin_channels": ["*"]}
-      }
+        "GUEST": {"disabled": false, "admin_channels": ["articles"]}
+      },
+      "sync": `
+        function(doc, oldDoc) {
+          if (doc.isAdmin == true) {
+            channel("articles");
+          }
+        }
+      `
     }
   }
 }
