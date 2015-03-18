@@ -1,5 +1,9 @@
 # GrowthHackersReader
 
+Learn how to use [import.io](http://import.io) and [Couchbase Mobile](http://developer.couchbase.com/mobile/) to build a Reader app for the top articles featured on [Growth Hackers](http://growthhackers.com).
+
+You have the choice to follow the Web [tutorial](https://github.com/jamiltz/GrowthHackersReader/tree/master/android) or Android [one](https://github.com/jamiltz/GrowthHackersReader/tree/master/web).
+
 ## Setting up the dev environment for Android
 
 This only applies to attendees who feel comfortable building the Android app. 

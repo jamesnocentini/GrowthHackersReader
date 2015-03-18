@@ -130,8 +130,9 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
             Article article = Article.from((Document) getItem(holder.getPosition()));
             article.setLikes(article.getLikes() + 1);
             article.save();
-            updateLikesCounter(holder, Integer.toString(article.getLikes()), true);
             updateHeartButton(holder);
+
+            holder.tsLikesCounter.setText(Integer.toString(article.getLikes()));
         }
     }
 
@@ -167,10 +168,6 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
         });
 
         animatorSet.start();
-    }
-
-    private void updateLikesCounter(ArticleViewHolder holder, String count, boolean animated) {
-        holder.tsLikesCounter.setText(count);
     }
 
 }

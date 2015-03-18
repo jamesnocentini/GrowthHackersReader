@@ -15,7 +15,7 @@ public class Application extends android.app.Application {
 
     public static final String TAG = "GrowthHackersReader";
     private static final String DATABASE_NAME = "workshop";
-    private static final String SYNC_URL_HTTP = "http://10.0.3.2:4984/growthhackers";
+    private static final String SYNC_URL_HTTP = "http://178.62.81.153:4984/growthhackers";
 
     private Manager manager;
     private Database database;

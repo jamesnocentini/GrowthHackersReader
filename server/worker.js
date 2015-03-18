@@ -18,9 +18,16 @@ request({url: url}, function(error, response, body) {
             obj.topic = article["topics_link/_text"];
             obj.thumbnail = article["right_image"];
             obj.author = article["link_4/_text"];
-            obj.summary = article["text_list_3"];
+            if (article["text_list_3"] instanceof Array) {
+                obj.summary = article["text_list_3"][0];
+            } else {
+                obj.summary = article["text_list_3"]
+            }
+            obj.isAdmin = true;
 
-              request.post('http://localhost:4985/growthhackers/', {body: JSON.stringify(obj)}, function(error, response, body) {
+            console.log(obj);
+
+            request.post('http://localhost:4985/growthhackers/', {body: JSON.stringify(obj)}, function(error, response, body) {
                 console.log(body);
             });
         }
