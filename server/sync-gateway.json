@@ -1,5 +1,10 @@
 {
   "log": ["CRUD", "REST+", "Access"],
+  "CORS": {
+    "Origin": ["http://localhost:8000"],
+    "Headers": ["Content-Type"],
+    "MaxAge": 17280000
+  },
   "databases": {
     "growthhackers": {
       "server": "walrus:",
