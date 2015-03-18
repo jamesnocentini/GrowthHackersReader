@@ -52,13 +52,15 @@ and add data persistence along with offline support!
   pull.start();
  ```
  
+ And call it in the `onCreate` method in `Application.java`
+ 
  Now when you run it, the app will get the latest articles from Sync Gateway.
  But we still need to display them so let's do that with the new Recycler View api.
 
  4. In `FeedAdapter.java`, we set up the necessary code to display the new documents stored in Couchbase Lite.
  Here we're using a Live Query to display new updates as they arrive. That's great to 
  display data in real-time and provide a good user experience. The code so far is essentially setting up this live query
- and making sure to reload the Recycler View when new documents are detected. But if you run the app, you will see empty rows.
+ and making sure to reload the Recycler View when new documents are detected. But if you run the app, you will see rows with placeholder text.
  Let's add data to those rows, add the following code to the `onBindViewHolder` method: 
  ```java
 Article article = Article.from((Document) getItem(i));
@@ -114,7 +116,7 @@ articleViewHolder.buttonLike.setTag(articleViewHolder);
  }
  ```
  
- 6. And call in the `onClick` method like so:
+ 6. And call it in the `onClick` method like so:
  
  ```java
  @Override
@@ -127,7 +129,7 @@ articleViewHolder.buttonLike.setTag(articleViewHolder);
  }
  ```
  
- 7. Notice that there is a counter as well to display the number of likes. We want to store this information in Couchbase Lite  and have it synched to other users. So let's update the `onClick` method to save the increase the number of likes by one:
+ 7. Notice that there is a counter as well to display the number of likes. We want to store this information in Couchbase Lite  and have it synched to other users. So let's update the `onClick` method to save the new number of likes (increased by one)
  
  ```java
 @Override
@@ -153,15 +155,14 @@ public void onClick(View v) {
   Run the app and start liking articles. You can quit and restart the app, everything is still there as it's being stored
   locally in Couchbase Lite.
  
- 9. Now we want to share likes with other users. We need to use a push replication for that to send
-  new data to Sync Gateway and will do all the heavy lifting of sending this to all users.
+ 9. Now we want to share likes with other users. We need to use a push replication for that and Sync Gateway will do all the heavy lifting of sending this to all users running the app.
   Back in Application.java, add a pushReplication property:
  
  ```java
  private Replication push;
  ```
  
- 10. Change the code in the `setupSync` method to be as follows:
+ 10. Change the code in the `setupSync` method to be as follow:
  
  ```java
 URL url;

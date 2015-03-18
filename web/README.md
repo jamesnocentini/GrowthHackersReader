@@ -1,5 +1,4 @@
-Growth Hackers Reader Web Tutorial (In progress...)
-============
+#Growth Hackers Reader Web Tutorial
 
 ### Goal
 
@@ -137,7 +136,7 @@ function render(articles) {
 * Inside of this function, we will iterate each article to render them:
 
 ```
-var content = '';
+var pageContent = '';
 
 for (var i = 0; i < articles.length; i++) {
     var article = articles[i].doc;
@@ -146,13 +145,14 @@ for (var i = 0; i < articles.length; i++) {
     
     var summary = '<p>' + article.summary + '</p>';
     
+    var cardContent = '<div class="card-content grey-text text-darken-4">' + title + summary + '</div>';
     
-    var card = '<div class="card"><div class="card-content grey-text text-darken-4">' + title + summary + '</div></div>';
+    var card = '<div class="card">' + cardContent + '</div>';
     
-    content += card;
+    pageContent += card;
 }
 
-$('#main-content').html(content);
+$('#main-content').html(pageContent);
 ```
 
 
@@ -163,3 +163,89 @@ then(function(result) {
     render(result.rows);
 }
 ```
+
+
+* Refresh and houray, we have the articles displayed!
+We want now to add the category of each article. Thanks to Materialize, we just need to add this element after ```card-content```:
+
+```
+var topic = '<span class="right-align badge">' + article.topic + '</span>';
+
+var cardFooter = '<div class="card-action">' + topic + '</div>';
+
+var card = '<div class="card">' + cardContent + cardFooter + '</div>';
+
+```
+
+
+* Next step, we will add a heart icon that allow us to display the number of likes and let us like the article too. We will add that icon in the ```card-action``` element:
+
+```
+var like = '<i id="' + article._id + '" class="mdi-action-favorite-outline"></i> ' + article.likes;
+var cardFooter = '<div class="card-action">' + like + topic + '</div>';
+```
+You can change the heart icon by replacing the ```mdi-action-favorite-outline``` class with any of [this list](http://materializecss.com/icons.html).
+
+* We want to add a small animation when we click on the heart icon. So first we add jQuery UI to the HTML page:
+
+```
+<script src="js/jquery-ui.js"></script>
+```
+
+
+* We are going to create a listener of click events on any heart icon. For that, add the next function in the end of your JavaScript code:
+
+```
+$('#main-content').on('click', '.mdi-action-favourite-outline', function click () {
+    //My code
+});
+```
+
+
+* Now we need to switch the icon when a click is triggered by the user:
+
+```
+$(this).toggleClass('mdi-action-favorite-outline mdi-action-favorite');
+```
+```toggleClass``` is a method of jQuery that allows to remove/add classes automatically of the selected element based on the list of classes when it's called.
+
+
+* Next step, we need to increment the number of likes in the database. After the toggle, we need to get the article id and fetch it to be able to update it:
+
+```
+var articleId = $(this).attr('id');
+
+localDB.get(articleId);
+```
+
+
+* Because the call to the database is asynchronous, we will update the number of likes in the callback:
+
+```
+localDB.get(articleId).then(function(doc) {
+    doc.likes++;
+    localDB.put(doc);
+});
+```
+
+
+* We're close to the end! You remember the ```localDB.allDocs``` call in the beginning of your JS file ? Wrap it in a function named fetch and call it in the end of your file:
+
+```
+fetch();
+```
+
+* Final step. Set ```fetch``` as a listener to the live changes:
+
+```
+localDB.sync(remoteDB, {
+    live: true
+}).on('change', function(change) {
+  fetch();
+}).on('error', function(err) {
+    console.log(err);
+});
+```
+
+
+* Refresh the page and you'll have in realtime, the new likes of each article ! Enjoy :smiley:
