@@ -21,7 +21,7 @@ and add data persistence along with offline support!
 
  ### Tutorial
 
- 1. In `Application.`, we already have a Couchbase Lite database set up in the `initDatabase()` method.
+ 1. In `Application.java`, we already have a Couchbase Lite database set up in the `initDatabase()` method.
  Let's set up the pull replication to get the articles from Sync Gateway. Create a `setupSync` method:
  
  ```java
@@ -82,51 +82,53 @@ articleViewHolder.buttonLike.setTag(articleViewHolder);
  Notice there is a heart on the right hand side of the row but nothing happends when you click on it.
  Let's focus on building this out.
 
- 5. In the `onClick` listener for the heart icon (in `FeedAdapter.java`), let's add some animation to make the heart spin and change color. This informs the user that this action is being processed. Add a new method called `updateHeartButton` as follows:
+ 5. In the `onClick` listener for the heart icon (in `FeedAdapter.java`), let's add some animation to make the heart spin and  change color. This informs the user that this action is being processed. Add a new method called `updateHeartButton` as      follows:
+
  ```java
-private void updateHeartButton(final ArticleViewHolder holder) {
-    AnimatorSet animatorSet = new AnimatorSet();
-    ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(holder.buttonLike, "rotation", 0f, 360f);
-    rotationAnim.setDuration(300);
-    rotationAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
-    ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(holder.buttonLike, "scaleX", 0.2f, 1f);
-    bounceAnimX.setDuration(300);
-    bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
-    ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(holder.buttonLike, "scaleY", 0.2f, 1f);
-    bounceAnimY.setDuration(300);
-    bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
-    bounceAnimY.addListener(new AnimatorListenerAdapter() {
-        @Override
-        public void onAnimationStart(Animator animation) {
-            holder.buttonLike.setImageResource(R.drawable.ic_heart_red);
-        }
-    });
-    animatorSet.play(rotationAnim);
-    animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
-    animatorSet.addListener(new AnimatorListenerAdapter() {
-        @Override
-        public void onAnimationEnd(Animator animation) {
-            holder.buttonLike.setImageResource(R.drawable.ic_heart_outline_grey);
-        }
-    });
-    animatorSet.start();
-}
-```
-
-And call in the `onClick` method like so:
-
-```java
-@Override
-public void onClick(View v) {
-    final int viewId = v.getId();
-    if (viewId == R.id.buttonLike) {
-        ArticleViewHolder holder = (ArticleViewHolder) v.getTag();
-        updateHeartButton(holder);
-    }
-}
-```
-
- 6. Notice that there is a counter as well to display the number of likes. We want to store this information in Couchbase Lite and have it synched to other users. So let's update the `onClick` method to save the increase the number of likes by one:
+ private void updateHeartButton(final ArticleViewHolder holder) {
+     AnimatorSet animatorSet = new AnimatorSet();
+     ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(holder.buttonLike, "rotation", 0f, 360f);
+     rotationAnim.setDuration(300);
+     rotationAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+     ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(holder.buttonLike, "scaleX", 0.2f, 1f);
+     bounceAnimX.setDuration(300);
+     bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
+     ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(holder.buttonLike, "scaleY", 0.2f, 1f);
+     bounceAnimY.setDuration(300);
+     bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
+     bounceAnimY.addListener(new AnimatorListenerAdapter() {
+         @Override
+         public void onAnimationStart(Animator animation) {
+             holder.buttonLike.setImageResource(R.drawable.ic_heart_red);
+         }
+     });
+     animatorSet.play(rotationAnim);
+     animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
+     animatorSet.addListener(new AnimatorListenerAdapter() {
+         @Override
+         public void onAnimationEnd(Animator animation) {
+             holder.buttonLike.setImageResource(R.drawable.ic_heart_outline_grey);
+         }
+     });
+     animatorSet.start();
+ }
+ ```
+ 
+ 6. And call in the `onClick` method like so:
+ 
+ ```java
+ @Override
+ public void onClick(View v) {
+     final int viewId = v.getId();
+     if (viewId == R.id.buttonLike) {
+         ArticleViewHolder holder = (ArticleViewHolder) v.getTag();
+         updateHeartButton(holder);
+     }
+ }
+ ```
+ 
+ 7. Notice that there is a counter as well to display the number of likes. We want to store this information in Couchbase Lite  and have it synched to other users. So let's update the `onClick` method to save the increase the number of likes by one:
+ 
  ```java
 @Override
 public void onClick(View v) {
@@ -141,23 +143,26 @@ public void onClick(View v) {
     }
 }
  ```
-
- 7. Finally we need to had some animation code to update the number of likes on the UI. In the `onClick` method, add this line below the call to the `updateHeartButton` method:
+ 
+ 8. Finally we need to had some animation code to update the number of likes on the UI. In the `onClick` method, add this   line below the call to the `updateHeartButton` method:
+ 
  ```java
  holder.tsLikesCounter.setText(Integer.toString(article.getLikes()));
  ```
-
+ 
   Run the app and start liking articles. You can quit and restart the app, everything is still there as it's being stored
   locally in Couchbase Lite.
-
- 8. Now we want to share likes with other users. We need to use a push replication for that to send
- new data to Sync Gateway and will do all the heavy lifting of sending this to all users.
- Back in Application.java, add a pushReplication property:
+ 
+ 9. Now we want to share likes with other users. We need to use a push replication for that to send
+  new data to Sync Gateway and will do all the heavy lifting of sending this to all users.
+  Back in Application.java, add a pushReplication property:
+ 
  ```java
  private Replication push;
  ```
-
- 9. Change the code in the `setupSync` method to be as follows:
+ 
+ 10. Change the code in the `setupSync` method to be as follows:
+ 
  ```java
 URL url;
 try {
@@ -173,7 +178,7 @@ pull.setContinuous(true);
 pull.start();
 push.start();
  ```
-
+ 
  10. Now run the app on two devices, you can like an article, see the counter increment by one and see it being updated on the other device.
  
 That's it! You can always ask questions on our Gitter channel at [http://gitter.im/couchbase/mobile](http://gitter.im/couchbase/mobile)
