@@ -186,12 +186,6 @@ var cardFooter = '<div class="card-action">' + like + topic + '</div>';
 ```
 You can change the heart icon by replacing the ```mdi-action-favorite-outline``` class with any of [this list](http://materializecss.com/icons.html).
 
-* We want to add a small animation when we click on the heart icon. So first we add jQuery UI to the HTML page:
-
-```
-<script src="js/jquery-ui.js"></script>
-```
-
 
 * We are going to create a listener of click events on any heart icon. For that, add the next function in the end of your JavaScript code:
 
