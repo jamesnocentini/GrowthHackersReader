@@ -98,7 +98,7 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
 
     @Override
     public void onBindViewHolder(ArticleViewHolder articleViewHolder, int i) {
-
+        // Step 4
     }
 
     @Override
@@ -114,8 +114,10 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
     public void onClick(View v) {
         final int viewId = v.getId();
         if (viewId == R.id.buttonLike) {
-
+            // Step 6
         }
     }
+
+    // Step 5
 
 }

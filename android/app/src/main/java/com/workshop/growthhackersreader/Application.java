@@ -16,6 +16,8 @@ public class Application extends android.app.Application {
     public static final String TAG = "GrowthHackersReader";
     private static final String DATABASE_NAME = "workshop";
 
+    // Step 2
+
     private Manager manager;
     private Database database;
 
@@ -47,6 +49,8 @@ public class Application extends android.app.Application {
         Log.d(Application.TAG, "Application State: onCreate()");
         initDatabase();
     }
+
+    // Step 1
 
     public Database getDatabase() {
         return database;
