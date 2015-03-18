@@ -1,6 +1,6 @@
 var localDB = new PouchDB('growthhackers');
 
-var remoteDB = new PouchDB('http://localhost:4984/growthhackers');
+var remoteDB = new PouchDB('http://178.62.81.153:4984/growthhackers');
 
 localDB.sync(remoteDB, {
     live: true
