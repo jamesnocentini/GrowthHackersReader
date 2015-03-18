@@ -16,9 +16,9 @@ request({url: url}, function(error, response, body) {
             var obj = {};
             obj.title = article["link_2/_text"];
             obj.topic = article["topics_link/_text"];
-            obj.thumbnail = article["footer_profile_icons_image_list"];
-            obj.author = article["link_3/_text"];
-            obj.summary = article["text_list_1"] + article["text_2"];
+            obj.thumbnail = article["right_image"];
+            obj.author = article["link_4/_text"];
+            obj.summary = article["text_list_3"];
 
               request.post('http://localhost:4985/growthhackers/', {body: JSON.stringify(obj)}, function(error, response, body) {
                 console.log(body);
