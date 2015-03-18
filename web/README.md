@@ -19,12 +19,13 @@ and add data persistence along with offline support!
 
  ### Tutorial
 
- 1. In the web folder, create a simple HTML page:
+* In the web folder, create a simple HTML page:
  
  ```
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
     <title>Women Who Code workshop</title>
   </head>
   <body>
@@ -33,19 +34,19 @@ and add data persistence along with offline support!
 </html>
  ```
 
- 2. Add Materialize stylesheet inside the head
+* Add Materialize stylesheet inside the head
  ```
  <link rel="stylesheet" href="css/materialize.css" />
  ```
 
 
- 3. We need to tell to the browser that this page is optimised for mobiles (it avoids use to zoom to read our page). For that, we add this meta to the head
+* We need to tell to the browser that this page is optimised for mobiles (it avoids use to zoom to read our page). For that, we add this meta to the head
  ```
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
  ```
  
  
- 4. We start to work the UI with the header. Thanks to Materialize, we already have many elements. 
+* We start to work the UI with the header. Thanks to Materialize, we already have many elements. 
  
  ```
  <nav>
@@ -56,21 +57,19 @@ and add data persistence along with offline support!
  ```
  
  
- 5. To be as close as possible to the Growth Hackers UI guidelines, we need to change the color of the header. The list of colors classes of Materialize is available [here](http://materializecss.com/color.html).
+* To be as close as possible to the Growth Hackers UI guidelines, we need to change the color of the header. The list of colors classes of Materialize is available [here](http://materializecss.com/color.html).
  We need to add it to the ```<div class="nav-wrapper">```.
  
  
-6. Now we finished the header, let's create the wrapper of the page content:
-
+* Now we finished the header, let's create the wrapper of the page content:
 ```
 <div class="row">
       <div class="col s12 m6"></div>
 </div>
 ```
-      
-
-7. Now we add the items that will represent the submitted links. To follow the Material Design guidelines, the [card UI element](http://materializecss.com/cards.html) is the best fit for this need. We have to add them inside ```<div class="col s12 m6"></div>```:
-
+ 
+ 
+* we add the items that will represent the submitted links. To follow the Material Design guidelines, the [card UI element](http://materializecss.com/cards.html) is the best fit for this need. We have to add them inside ```<div class="col s12 m6"></div>```:
 ```
 <div class="card">
   <div class="card-content grey-text text-darken-4">
@@ -84,3 +83,26 @@ and add data persistence along with offline support!
 ```
 Don't forget to add color classes to have the right UI fit.
 
+
+* Now that we finished the boilerplate of our UI, we can start to add the database where the Growth Hacker articles will be stored.
+Just before ```</body>```, add the PouchDB script (which is the local database):
+```
+<script src="js/pouchdb.js></script>
+```
+
+
+* We have to create a local database and connect it in realtime with our Couchbase server:
+
+```
+var localDB  = new PouchDB('growthhackers');
+var remoteDB = new PouchDB('http://178.62.81.153:4984/growthhackers');
+
+localDB.sync(remoteDB, {
+    live: true
+});
+```
+
+* We have to add jQuery, to help us writing less boilerplate JavaScript code, just after the pouchdb line in ```</body>```:
+```
+<script src="js/jquery.js></script>
+```
