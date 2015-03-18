@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.jamiltz.com.growthhackersreader.R;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import android.view.animation.OvershootInterpolator;
 import com.couchbase.lite.CouchbaseLiteException;
 import com.couchbase.lite.Database;
 import com.couchbase.lite.Document;
+import com.couchbase.lite.DocumentChange;
 import com.couchbase.lite.LiveQuery;
 import com.couchbase.lite.QueryEnumerator;
 import com.couchbase.lite.QueryOptions;
+import com.couchbase.lite.QueryRow;
 import com.squareup.picasso.Picasso;
 
 
@@ -50,10 +53,21 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
                         if (event.isExternal() == true) {
                             try {
                                 enumerator = query.run();
-                                notifyDataSetChanged();
                             } catch (CouchbaseLiteException e) {
                                 e.printStackTrace();
                             }
+                            for(DocumentChange change : event.getChanges()) {
+                                int i = 0;
+                                while (enumerator.hasNext()) {
+                                    QueryRow row = enumerator.next();
+                                    if (row.getDocumentId().equals(change.getDocumentId())) {
+                                        notifyItemChanged(i);
+                                    }
+                                    i++;
+                                }
+
+                            }
+
                         }
                     }
                 });
@@ -95,7 +109,7 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
                 .transform(new RoundedTransformation())
                 .into(articleViewHolder.imageThumbnail);
         articleViewHolder.summaryView.setText(article.getSummary());
-        articleViewHolder.tsLikesCounter.setCurrentText(Integer.toString(article.getLikes()));
+        articleViewHolder.tsLikesCounter.setText(Integer.toString(article.getLikes()));
         articleViewHolder.buttonLike.setTag(articleViewHolder);
     }
 
@@ -153,7 +167,6 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
         });
 
         animatorSet.start();
-
     }
 
     private void updateLikesCounter(ArticleViewHolder holder, String count, boolean animated) {

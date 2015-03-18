@@ -4,7 +4,8 @@
   "description": "",
   "main": "worker.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "~/Developer/sync_gateway/bin/sync_gateway sync-gateway.json"
   },
   "author": "",
   "license": "ISC",

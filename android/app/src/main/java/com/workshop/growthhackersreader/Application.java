@@ -21,6 +21,7 @@ public class Application extends android.app.Application {
     private Database database;
 
     private Replication pull;
+    private Replication push;
 
     private void initDatabase() {
         Manager.enableLogging(TAG, Log.VERBOSE);
@@ -61,10 +62,14 @@ public class Application extends android.app.Application {
             return;
         }
 
+        push = database.createPushReplication(url);
+        push.setContinuous(true);
+
         pull = database.createPullReplication(url);
         pull.setContinuous(true);
 
         pull.start();
+        push.start();
     }
 
     public Database getDatabase() {
