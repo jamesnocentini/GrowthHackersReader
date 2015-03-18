@@ -19,12 +19,13 @@ and add data persistence along with offline support!
 
  ### Tutorial
 
- 1. In the web folder, create a simple HTML page:
+* In the web folder, create a simple HTML page:
  
  ```
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="utf-8" />
     <title>Women Who Code workshop</title>
   </head>
   <body>
@@ -33,19 +34,19 @@ and add data persistence along with offline support!
 </html>
  ```
 
- 2. Add Materialize stylesheet inside the head
+* Add Materialize stylesheet inside the head
  ```
  <link rel="stylesheet" href="css/materialize.css" />
  ```
 
 
- 3. We need to tell to the browser that this page is optimised for mobiles (it avoids use to zoom to read our page). For that, we add this meta to the head
+* We need to tell to the browser that this page is optimised for mobiles (it avoids use to zoom to read our page). For that, we add this meta to the head
  ```
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
  ```
  
  
- 4. We start to work the UI with the header. Thanks to Materialize, we already have many elements. 
+* We start to work the UI with the header. Thanks to Materialize, we already have many elements. 
  
  ```
  <nav>
@@ -56,21 +57,19 @@ and add data persistence along with offline support!
  ```
  
  
- 5. To be as close as possible to the Growth Hackers UI guidelines, we need to change the color of the header. The list of colors classes of Materialize is available [here](http://materializecss.com/color.html).
+* To be as close as possible to the Growth Hackers UI guidelines, we need to change the color of the header. The list of colors classes of Materialize is available [here](http://materializecss.com/color.html).
  We need to add it to the ```<div class="nav-wrapper">```.
  
  
-6. Now we finished the header, let's create the wrapper of the page content:
-
+* Now we finished the header, let's create the wrapper of the page content:
 ```
 <div class="row">
-      <div class="col s12 m6"></div>
+      <div class="col s12"></div>
 </div>
 ```
-      
-
-7. Now we add the items that will represent the submitted links. To follow the Material Design guidelines, the [card UI element](http://materializecss.com/cards.html) is the best fit for this need. We have to add them inside ```<div class="col s12 m6"></div>```:
-
+ 
+ 
+* we add the items that will represent the submitted links. To follow the Material Design guidelines, the [card UI element](http://materializecss.com/cards.html) is the best fit for this need. We have to add them inside ```<div class="col s12 m6"></div>```:
 ```
 <div class="card">
   <div class="card-content grey-text text-darken-4">
@@ -84,3 +83,83 @@ and add data persistence along with offline support!
 ```
 Don't forget to add color classes to have the right UI fit.
 
+
+* Now that we finished the boilerplate of our UI, we can start to add the database where the Growth Hacker articles will be stored.
+Just before ```</body>```, add the PouchDB script (which is the local database):
+```
+<script src="js/pouchdb.js"></script>
+```
+
+
+* We have to add jQuery, to help us writing less boilerplate JavaScript code, just after the pouchdb line in ```</body>```:
+```
+<script src="js/jquery.js></script>
+```
+
+
+* Now we have all our JavaScript dependencies added in our page, we are going to create our own JavaScript file where all the logic will be found. Create a empty file named ```index.js``` in the js folder.
+
+
+* We have to create a local database and connect it in realtime with our Couchbase server (in our JS file):
+
+```
+var localDB  = new PouchDB('growthhackers');
+var remoteDB = new PouchDB('http://178.62.81.153:4984/growthhackers');
+
+localDB.sync(remoteDB, {
+    live: true
+});
+```
+
+* Add an **id** attribute to the ```<div class="col s12"></div>``` to identify it easily. Set **main-content** as a value.
+
+
+* Let's go back to our JavaScript file. We need to fetch the articles from the database:
+
+```
+localDB.allDocs({
+    include_docs: true
+}).then(function(result) {
+    alert('There are' + result.rows.length + ' articles');
+}).catch(function(err) {
+    alert('Sorry, there is a problem. Please refresh');
+});
+```
+
+* Instead of showing a message, it will be much better to display the articles. So let's create a function that we will call it render:
+
+```
+function render(articles) {
+    // We are going to bind data to the view here
+}
+```
+
+* Inside of this function, we will iterate each article to render them:
+
+```
+var content = '';
+
+for (var i = 0; i < articles.length; i++) {
+    var article = articles[i].doc;
+    
+    var title = '<span class="card-title blue-text text-darken-2">' + article.title + '</span>';
+    
+    var summary = '<p>' + article.summary + '</p>';
+    
+    
+    var card = '<div class="card"><div class="card-content grey-text text-darken-4">' + title + summary + '</div></div>';
+    
+    content += card;
+}
+
+$('#main-content').html(content);
+```
+
+
+* Now we replace the message by this render:
+
+```
+then(function(result) {
+    render(result.rows);
+}
+```
