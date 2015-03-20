@@ -14,4 +14,4 @@ Please open an [issue](https://github.com/jamiltz/GrowthHackersReader/issues) if
 
 Here's the blazing fast replication between Couchbase Lite Android and PouchDB:
 
-<video src="http://f.cl.ly/items/2Z0j1N3I1i1j3L2x1h0y/pouch-sg.mp4"></video>
+![img](http://cl.ly/image/3y3x1l0H0h0B/pouch-sg.gif)
