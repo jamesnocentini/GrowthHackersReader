@@ -13,3 +13,5 @@ Alternatively, you can check out the [config file](https://github.com/jamiltz/Gr
 Please open an [issue](https://github.com/jamiltz/GrowthHackersReader/issues) if you have suggestions to improve those tutorials.
 
 Here's the blazing fast replication between Couchbase Lite Android and PouchDB:
+
+http://f.cl.ly/items/2Z0j1N3I1i1j3L2x1h0y/pouch-sg.mp4
