@@ -17,6 +17,9 @@ public class Application extends android.app.Application {
     private static final String DATABASE_NAME = "workshop";
 
     // Step 2
+    private static final String SYNC_URL_HTTP = "http://178.62.81.153:4984/growthhackers";
+    private Replication pull;
+    private Replication push;
 
     private Manager manager;
     private Database database;
@@ -48,9 +51,27 @@ public class Application extends android.app.Application {
         super.onCreate();
         Log.d(Application.TAG, "Application State: onCreate()");
         initDatabase();
+        setupSync();
     }
 
     // Step 1
+    private void setupSync() {
+        URL url;
+        try {
+            url = new URL(SYNC_URL_HTTP);
+        } catch (MalformedURLException e) {
+            Log.e(Application.TAG, "Sync URL is invalid, setting up sync failed");
+            return;
+        }
+        push = database.createPushReplication(url);
+        push.setContinuous(true);
+
+        pull = database.createPullReplication(url);
+        pull.setContinuous(true);
+
+        pull.start();
+        push.start();
+    }
 
     public Database getDatabase() {
         return database;

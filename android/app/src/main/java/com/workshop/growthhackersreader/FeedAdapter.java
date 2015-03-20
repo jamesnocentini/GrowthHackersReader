@@ -99,6 +99,19 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
     @Override
     public void onBindViewHolder(ArticleViewHolder articleViewHolder, int i) {
         // Step 4
+        Article article = Article.from((Document) getItem(i));
+        articleViewHolder.labelTitle.setText(article.getTitle());
+        articleViewHolder.labelTopic.setText(article.getTopic());
+        Picasso.with(context)
+                .load(article.getThumbnail())
+                .placeholder(R.drawable.ic_person_outline_grey600_24dp)
+                .centerCrop()
+                .resize(56, 56)
+                .transform(new RoundedTransformation())
+                .into(articleViewHolder.imageThumbnail);
+        articleViewHolder.summaryView.setText(article.getSummary());
+        articleViewHolder.tsLikesCounter.setText(Integer.toString(article.getLikes()));
+        articleViewHolder.buttonLike.setTag(articleViewHolder);
     }
 
     @Override
@@ -115,9 +128,42 @@ public class FeedAdapter extends RecyclerView.Adapter<ArticleViewHolder> impleme
         final int viewId = v.getId();
         if (viewId == R.id.buttonLike) {
             // Step 6
+            ArticleViewHolder holder = (ArticleViewHolder) v.getTag();
+            Article article = Article.from((Document) getItem(holder.getPosition()));
+            article.setLikes(article.getLikes() + 1);
+            article.save();
+            updateHeartButton(holder);
+            holder.tsLikesCounter.setText(Integer.toString(article.getLikes()));
         }
     }
 
     // Step 5
+    private void updateHeartButton(final ArticleViewHolder holder) {
+        AnimatorSet animatorSet = new AnimatorSet();
+        ObjectAnimator rotationAnim = ObjectAnimator.ofFloat(holder.buttonLike, "rotation", 0f, 360f);
+        rotationAnim.setDuration(300);
+        rotationAnim.setInterpolator(ACCELERATE_INTERPOLATOR);
+        ObjectAnimator bounceAnimX = ObjectAnimator.ofFloat(holder.buttonLike, "scaleX", 0.2f, 1f);
+        bounceAnimX.setDuration(300);
+        bounceAnimX.setInterpolator(OVERSHOOT_INTERPOLATOR);
+        ObjectAnimator bounceAnimY = ObjectAnimator.ofFloat(holder.buttonLike, "scaleY", 0.2f, 1f);
+        bounceAnimY.setDuration(300);
+        bounceAnimY.setInterpolator(OVERSHOOT_INTERPOLATOR);
+        bounceAnimY.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                holder.buttonLike.setImageResource(R.drawable.ic_heart_red);
+            }
+        });
+        animatorSet.play(rotationAnim);
+        animatorSet.play(bounceAnimX).with(bounceAnimY).after(rotationAnim);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                holder.buttonLike.setImageResource(R.drawable.ic_heart_outline_grey);
+            }
+        });
+        animatorSet.start();
+    }
 
 }
