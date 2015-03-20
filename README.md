@@ -4,20 +4,12 @@ Learn how to use [import.io](http://import.io) and [Couchbase Mobile](http://dev
 
 You have the choice to follow the Web [tutorial](https://github.com/jamiltz/GrowthHackersReader/tree/master/web) or Android [one](https://github.com/jamiltz/GrowthHackersReader/tree/master/android).
 
-## Setting up the dev environment for Android
+**NOTE:** The Web tutorial is experimental. @jchris is doing a tremendous work on adding PouchDB and Sync Gateway compatibility. Feel free to try it out as an experiment and provide feeback as this would be very valuable to both teams working on this :)
 
-This only applies to attendees who feel comfortable building the Android app. 
+We will try to keep the latest master branch of Sync Gateway running on the cloud, it's at `http://178.62.81.153:4984/`
 
-Before attending the workshop, be sure to do those 3 things:
+Alternatively, you can check out the [config file](https://github.com/jamiltz/GrowthHackersReader/blob/master/server/sync-gateway.json) and run your own SG locally (build it from the latest master branch).
 
-* Download the latest version of Android Studio available [here](http://developer.android.com/sdk/index.html)
-* Install it and download extra packages as per [this guide](http://developer.android.com/sdk/installing/index.html?pkg=studio)
-* Open this app in Android Studio by choosing the **Select File > Import Project** menu and select build.gradle located in the android folder. Run the app, you should see this screen:
+Please open an [issue](https://github.com/jamiltz/GrowthHackersReader/issues) if you have suggestions to improve those tutorials.
 
-![img](http://f.cl.ly/items/3A0b3w440a2H3w1V3k34/Screen%20Shot%202015-03-16%20at%2016.49.49.png)
-
-And you're set!
-
-You can open a github [issue](https://github.com/jamiltz/GrowthHackersReader/issues) if you are having trouble setting things up.
-
-For those totally new to Android development, there will be an option to follow the same steps with HTML/CSS/JS. No need to prepare for that.
+Here's the blazing fast replication between Couchbase Lite Android and PouchDB:
