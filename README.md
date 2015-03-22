@@ -6,9 +6,7 @@ You have the choice to follow the Web [tutorial](https://github.com/jamiltz/Grow
 
 **NOTE:** The Web tutorial is experimental. @jchris is doing a tremendous work on adding PouchDB and Sync Gateway compatibility. Feel free to try it out as an experiment and provide feeback as this would be very valuable to both teams working on this :)
 
-We will try to keep the latest master branch of Sync Gateway running on the cloud, it's at `http://178.62.81.153:4984/`
-
-Alternatively, you can check out the [config file](https://github.com/jamiltz/GrowthHackersReader/blob/master/server/sync-gateway.json) and run your own SG locally (build it from the latest master branch).
+You can check out the [config file](https://github.com/jamiltz/GrowthHackersReader/blob/master/server/sync-gateway.json) and run your own SG locally (build it from the latest master branch).
 
 Please open an [issue](https://github.com/jamiltz/GrowthHackersReader/issues) if you have suggestions to improve those tutorials.
 
